@@ -2,8 +2,9 @@
 <head>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-google.load("visualization", '1', {packages:['corechart']});
+google.load("visualization", '1', {packages:['corechart', 'table', 'map']});
 google.setOnLoadCallback(drawChart);
+google.setOnLoadCallback(drawChartTwo);
 function drawChart() {
   var query = new google.visualization.Query(
       'https://docs.google.com/a/devbootcamp.com/spreadsheet/ccc?key=0AkFRkd4nKoR3dGpCSDg2bDlCV0hXc3NpM3B5TVg3QVE#gid=0');
@@ -19,8 +20,28 @@ function handleQueryResponse(response) {
 
   var data = response.getDataTable();
   var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
-  chart.draw(data, { legend: { position: 'none' } });
+  chart.draw(data, { legend: { position: 'none' } })
+
 }
+function drawChartTwo() {     
+
+  var data1 = google.visualization.arrayToDataTable([
+          ['Week', 'Interviews', 'Admitted'],
+          ['Jan 27',  17,      7],
+          ['Feb 3',  20,      10],
+          ['Feb 10',  22,      5],
+          ['Feb 17',  17,      3]
+        ]);
+
+        var options1 = {
+          title: 'Interviews & Admitted Students',
+          vAxis: {title: 'Week of',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart2 = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart2.draw(data1, options1);
+
+  }
 </script>
 
 <title>Admissions Data</title>
@@ -29,5 +50,7 @@ function handleQueryResponse(response) {
 <body>
 <h4><p> Cohort Fill Data - Chicago </p></h4>
 <span id='columnchart'></span>
+<h4><p> Interviews And Admitted Students - Chicago </p></h4>
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>
